@@ -29,6 +29,8 @@ def main():
 
     p1 = Player(player_pos_x,player_pos_y)
     asteroid_field = AsteroidField()
+    
+    
 
     clock = pygame.time.Clock()
     dt = 0
@@ -48,15 +50,20 @@ def main():
             obj.update(dt)
 
         for asteroid in asteroids:
-            if asteroid.collision(p1) == True:
-                print("GAME OVER")
+            if asteroid.has_collided_with(p1):
+                print("GAME OVER!")
                 sys.exit()
+            
+            for bullet in shots:
+                if asteroid.has_collided_with(bullet):
+                    asteroid.split()
+                    bullet.kill()
         
          
         pygame.display.flip()
 
-        delta_time = clock.tick(60)
-        dt = delta_time/1000
+
+        dt= clock.tick(60)/1000
         
        
 
